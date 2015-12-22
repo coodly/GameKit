@@ -17,14 +17,14 @@
 import Foundation
 import UIKit
 
-class GameScrollViewContained : GameView {
-    var scrollView: GameScrollView?
+public class GameScrollViewContained : GameView {
+    public var scrollView: GameScrollView?
     
-    func scrolledVisibleTo(visibleFrame: CGRect) {
+    public func scrolledVisibleTo(visibleFrame: CGRect) {
         
     }
     
-    func presentationInsets() -> UIEdgeInsets {
+    public func presentationInsets() -> UIEdgeInsets {
         return UIEdgeInsetsZero
     }
 }

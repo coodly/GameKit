@@ -17,9 +17,9 @@
 import Foundation
 import SpriteKit
 
-class GameView: SKSpriteNode {
+public class GameView: SKSpriteNode {
     
-    func loadContent() {
+    public func loadContent() {
         
     }
     
@@ -27,7 +27,7 @@ class GameView: SKSpriteNode {
         
     }
     
-    func positionContent() {
+    public func positionContent() {
         for node in self.children {
             if !node.isKindOfClass(GameView) {
                 continue
@@ -38,11 +38,11 @@ class GameView: SKSpriteNode {
         }
     }
     
-    func update(time: NSTimeInterval) {
+    public func update(time: NSTimeInterval) {
     
     }
     
-    func addGameView(view: GameView) {
+    public func addGameView(view: GameView) {
         addChild(view)
         view.anchorPoint = CGPointMake(0, 0)
         view.loadContent()

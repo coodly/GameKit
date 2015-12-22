@@ -17,10 +17,10 @@
 import Foundation
 import UIKit
 
-class GameScreen: GameView {
-    var game: Game?
+public class GameScreen: GameView {
+    public var game: Game?
     
-    func handleTapAt(point: CGPoint) {
+    public func handleTapAt(point: CGPoint) {
         print("handleTapAt:\(point)")
     }
 }

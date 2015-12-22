@@ -17,7 +17,7 @@
 import Foundation
 import SpriteKit
 
-class GameButton : SKSpriteNode {
-    var action: SKAction?
-    var touchDisables = false
+public class GameButton : SKSpriteNode {
+    public var action: SKAction?
+    public var touchDisables = false
 }
