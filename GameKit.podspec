@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'git@github.com:coodly/GameKit.git', :tag => s.version }
 
   s.ios.deployment_target = '8.0'
+  s.osx.deployment_target = '10.11'
 
   s.source_files = 'Source/*.swift'
 
