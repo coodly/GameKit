@@ -164,7 +164,6 @@ public class GameScrollView: GameView {
         func positionScrollView() {
             scrollView.frame.size = size
             scrollView.contentInsets = contentInset
-            scrollView.scrollerInsets = NSEdgeInsetsMake(contentInset.top, 0, contentInset.bottom, 0)
             
             scene!.view!.addSubview(scrollView)
         }
