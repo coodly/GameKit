@@ -50,6 +50,11 @@ public class GameScrollView: GameView {
         presented!.scrollView = self
         adjustContentSize()
         
+        #if os(iOS)
+        #else
+            scrollView.contentView.scrollToPoint(NSMakePoint(0, -contentInset.top))
+        #endif
+        
         positionPresentedNode()
     }
     
