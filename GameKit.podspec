@@ -7,10 +7,10 @@ Pod::Spec.new do |s|
   s.authors = { 'Jaanus Siim' => 'jaanus@coodly.com' }
   s.source = { :git => 'git@github.com:coodly/GameKit.git', :tag => s.version }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.11'
 
-  s.source_files = 'Source/*.swift'
+  s.source_files = 'Sources/*.swift'
 
   s.requires_arc = true
 end
