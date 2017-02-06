@@ -10,7 +10,20 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.11'
 
-  s.source_files = 'Sources/*.swift'
+  s.subspec 'Core' do |core|
+    core.source_files = "Sources/Core"
+    core.frameworks = 'SpriteKit'
+  end
+
+  s.subspec 'iOS' do |os|
+    os.dependency "GameKit/Core"
+    os.source_files = "Sources/iOS"
+  end
+
+  s.subspec 'macOS' do |os|
+    os.dependency "GameKit/Core"
+    os.source_files = "Sources/macOS"
+  end
 
   s.requires_arc = true
 end
