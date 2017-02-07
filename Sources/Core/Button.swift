@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-internal extension UIView {
-    func add(fullSized view: UIView) {
-        addSubview(view)
-        let views: [String: AnyObject] = ["view": view]
+open class Button: View {
+    override func backingView() -> PlatformView {
+        if let existing = reference {
+            return existing
+        }
         
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let vertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: views)
-        let horizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: views)
-        addConstraints(vertical + horizontal)
+        let ref = ReferenceView()
+        ref.tied = self
+        reference = ref
+        return ref
     }
 }
