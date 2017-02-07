@@ -19,13 +19,13 @@ import AppKit
 internal class ReferenceView: NSView {
     var tied: View! {
         didSet {
-            resizeSubviews(withOldSize: bounds.size)
+            resize(withOldSuperviewSize: bounds.size)
         }
     }
     
-    override func resizeSubviews(withOldSize oldSize: NSSize) {
-        super.resizeSubviews(withOldSize: oldSize)
-        
+    override func resize(withOldSuperviewSize oldSize: NSSize) {
+        super.resize(withOldSuperviewSize: oldSize)
+
         let parentFrame = superview!.bounds
         var myPosition = CGPoint.zero
         myPosition.x = frame.origin.x
@@ -34,4 +34,5 @@ internal class ReferenceView: NSView {
         tied.position = myPosition
         tied.size = bounds.size
     }
+    
 }
