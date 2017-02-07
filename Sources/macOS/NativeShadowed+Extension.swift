@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-import AppKit
-
-internal class ReferenceScrollView: NSScrollView, NativeShadowed {
-    var tied: View! {
-        didSet {
-            positionTied()
+internal extension NativeShadowed where Self: NSView {
+    func positionTied() {
+        guard let superview = superview else {
+            return
         }
-    }
-    
-    override func viewDidMoveToSuperview() {
-        super.viewDidMoveToSuperview()
         
-        positionTied()
-    }
-    
-    override func resize(withOldSuperviewSize oldSize: NSSize) {
-        super.resize(withOldSuperviewSize: oldSize)
+        let parentFrame = superview.bounds
+        var myPosition = CGPoint.zero
+        myPosition.x = frame.origin.x
+        myPosition.y = parentFrame.height - bounds.height
         
-        positionTied()
+        tied.position = myPosition
+        tied.size = bounds.size
+        
+        for sub in subviews {
+            guard sub.subviews.count == 0, let view = sub as? NativeShadowed else {
+                continue
+            }
+            
+            view.positionTied()
+        }
     }
 }

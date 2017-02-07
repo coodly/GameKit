@@ -17,6 +17,16 @@
 public class LayoutConstraint {
     internal let wrapped: NSLayoutConstraint
     
+    public convenience init(item view1: View, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation, toItem view2: View?, attribute attr2: NSLayoutAttribute, multiplier: CGFloat, constant c: CGFloat) {
+        
+        let wrapped = NSLayoutConstraint(item: view1.backingView(), attribute: attr1, relatedBy: relation, toItem: view2?.backingView(), attribute: attr2, multiplier: multiplier, constant: c)
+        self.init(wrapped: wrapped)
+    }
+
+    private init(wrapped: NSLayoutConstraint) {
+        self.wrapped = wrapped
+    }
+
     public class func constraints(withVisualFormat format: String, options opts: NSLayoutFormatOptions = [], metrics: Metrics = [:], views: [String : Any]) -> [LayoutConstraint] {
         
         
@@ -32,9 +42,5 @@ public class LayoutConstraint {
         
         let constraints = NSLayoutConstraint.constraints(withVisualFormat: format, options: opts, metrics: metrics, views: withBacking)
         return constraints.map({ LayoutConstraint(wrapped: $0) })
-    }
-    
-    private init(wrapped: NSLayoutConstraint) {
-        self.wrapped = wrapped
     }
 }

@@ -38,6 +38,9 @@ open class View: SKSpriteNode {
         let backing = view.backingView()
         backing.translatesAutoresizingMaskIntoConstraints = false
         reference?.addSubview(backing)
+        
+        addChild(view)
+        view.load()
     }
     
     public func addConstraints(_ constraints: [LayoutConstraint]) {
@@ -52,9 +55,6 @@ open class View: SKSpriteNode {
         let vertical = LayoutConstraint.constraints(withVisualFormat: "V:|[view(\(height))]", options: [], metrics: nil, views: views)
         let horizontal = LayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: views)
         addConstraints(vertical + horizontal)
-        
-        addChild(view)
-        view.load()
     }
     
     public func add(fullSized view: View) {
@@ -65,8 +65,5 @@ open class View: SKSpriteNode {
         let vertical = LayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: views)
         let horizontal = LayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: views)
         addConstraints(vertical + horizontal)
-        
-        addChild(view)
-        view.load()
     }
 }
