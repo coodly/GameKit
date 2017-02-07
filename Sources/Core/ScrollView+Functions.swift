@@ -14,14 +14,30 @@
  * limitations under the License.
  */
 
-public class ScrollView: View {
-    internal var contentSize: CGSize = .zero {
-        didSet {
-            adjustContentSize(contentSize)
-        }
-    }
-    
+import SpriteKit
+
+public extension ScrollView {
     public func present(_ contained: ScrollViewContained) {
+        self.contained = contained
+        contained.anchorPoint = .zero
         contentSize = contained.size
+        addChild(contained)
+        
+        contained.load()
+        positionPresentedNode()
+    }
+
+    internal func positionPresentedNode() {
+        guard let contained = contained else {
+            return
+        }
+        
+        let offset = contentOffsetY
+        let nextPosition = CGPoint(x: (size.width - contained.size.width) / 2, y: -contained.size.height + size.height + offset)
+        
+        let moveAction = SKAction.move(to: nextPosition, duration: 0)
+        
+        let sequence = SKAction.sequence([moveAction])
+        contained.run(sequence)
     }
 }

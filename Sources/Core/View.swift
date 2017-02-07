@@ -17,9 +17,18 @@
 import SpriteKit
 
 open class View: SKSpriteNode {
-    weak var reference: ReferenceView?
+    weak var reference: PlatformView?
+    open override var size: CGSize {
+        didSet {
+            sizeChanged()
+        }
+    }
     
     open func load() {
+        
+    }
+    
+    internal func sizeChanged() {
         
     }
     

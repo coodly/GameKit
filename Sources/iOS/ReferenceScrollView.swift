@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-internal extension View {
-    func backingView() -> PlatformView {
-        if let existing = reference {
-            return existing
-        }
+import UIKit
+
+internal class ReferenceScrollView: UIScrollView {
+    var tied: View!
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        let created = ReferenceView()
-        created.tied = self
-        reference = created
+        let parentFrame = superview!.bounds
+        var myPosition = CGPoint.zero
+        myPosition.x = frame.origin.x
+        myPosition.y = parentFrame.height - bounds.height
         
-        return created
+        tied.position = myPosition
+        tied.size = bounds.size
     }
 }

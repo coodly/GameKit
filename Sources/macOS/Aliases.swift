@@ -14,8 +14,4 @@
  * limitations under the License.
  */
 
-internal extension ScrollView {
-    func adjustContentSize(_ size: CGSize) {
-        
-    }
-}
+internal typealias PlatformView = NSView
