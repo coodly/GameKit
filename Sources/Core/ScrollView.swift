@@ -14,31 +14,14 @@
  * limitations under the License.
  */
 
-import SpriteKit
-
-open class View: SKSpriteNode {
-    weak var reference: ReferenceView?
-    
-    open func load() {
-        
+public class ScrollView: View {
+    internal var contentSize: CGSize = .zero {
+        didSet {
+            adjustContentSize(contentSize)
+        }
     }
     
-    public func add(toTop view: View, height: CGFloat) {
-        view.anchorPoint = .zero
-        
-        let ref = view.backingView()
-        reference?.add(toTop: ref, height: height)
-
-        addChild(view)
-        view.load()
-    }
-    
-    public func add(fullSized view: View) {
-        view.anchorPoint = .zero
-        let ref = view.backingView()
-        reference?.add(fullSized: ref)
-        
-        addChild(view)
-        view.load()
+    public func present(_ contained: ScrollViewContained) {
+        contentSize = contained.size
     }
 }

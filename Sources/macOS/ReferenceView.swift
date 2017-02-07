@@ -23,10 +23,20 @@ internal class ReferenceView: NSView {
         }
     }
     
+    override func viewDidMoveToSuperview() {
+        super.viewDidMoveToSuperview()
+        
+        resize(withOldSuperviewSize: bounds.size)
+    }
+    
     override func resize(withOldSuperviewSize oldSize: NSSize) {
         super.resize(withOldSuperviewSize: oldSize)
 
-        let parentFrame = superview!.bounds
+        guard let superview = superview else {
+            return
+        }
+        
+        let parentFrame = superview.bounds
         var myPosition = CGPoint.zero
         myPosition.x = frame.origin.x
         myPosition.y = parentFrame.height - bounds.height

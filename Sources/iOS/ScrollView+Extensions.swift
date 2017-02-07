@@ -14,31 +14,8 @@
  * limitations under the License.
  */
 
-import SpriteKit
-
-open class View: SKSpriteNode {
-    weak var reference: ReferenceView?
-    
-    open func load() {
+internal extension ScrollView {
+    func adjustContentSize(_ size: CGSize) {
         
-    }
-    
-    public func add(toTop view: View, height: CGFloat) {
-        view.anchorPoint = .zero
-        
-        let ref = view.backingView()
-        reference?.add(toTop: ref, height: height)
-
-        addChild(view)
-        view.load()
-    }
-    
-    public func add(fullSized view: View) {
-        view.anchorPoint = .zero
-        let ref = view.backingView()
-        reference?.add(fullSized: ref)
-        
-        addChild(view)
-        view.load()
     }
 }
