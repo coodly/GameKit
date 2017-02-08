@@ -19,7 +19,7 @@ private extension Selector {
 }
 
 public class ScrollView: View {
-    override var reference: PlatformView {
+    override var backingView: PlatformView {
         return scrollView
     }
     internal var contained: ScrollViewContained?

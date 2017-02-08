@@ -27,7 +27,7 @@ open class Game: SKScene {
     
     public func add(fullSized view: View) {
         view.anchorPoint = .zero
-        let reference = view.reference
+        let reference = view.backingView
         self.view!.add(fullSized: reference)        
         addChild(view)
         view.load()

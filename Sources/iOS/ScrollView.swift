@@ -15,32 +15,29 @@
  */
 
 public class ScrollView: View, UIScrollViewDelegate {
-    private lazy var shadowScroll: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.delegate = self
         return scroll
     }()
     
-    override internal var reference: PlatformView {
-        return shadowScroll
+    override internal var backingView: PlatformView {
+        return scrollView
     }
 
     internal var contained: ScrollViewContained?
     internal var contentOffsetY: CGFloat {
-        return scrollView?.contentOffset.y ?? 0
-    }
-    private var scrollView: UIScrollView? {
-        return reference as? UIScrollView
+        return scrollView.contentOffset.y
     }
     internal var contentSize: CGSize = .zero {
         didSet {
-            scrollView?.contentSize = contentSize
+            scrollView.contentSize = contentSize
         }
     }
     public var contentInset: EdgeInsets = .zero {
         didSet {
-            scrollView?.contentInset = contentInset
-            scrollView?.scrollIndicatorInsets = contentInset
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
         }
     }
     
