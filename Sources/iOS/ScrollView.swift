@@ -15,6 +15,16 @@
  */
 
 public class ScrollView: View, UIScrollViewDelegate {
+    private lazy var shadowScroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.delegate = self
+        return scroll
+    }()
+    
+    override internal var reference: PlatformView {
+        return shadowScroll
+    }
+
     internal var contained: ScrollViewContained?
     internal var contentOffsetY: CGFloat {
         return scrollView?.contentOffset.y ?? 0
@@ -35,19 +45,9 @@ public class ScrollView: View, UIScrollViewDelegate {
     }
     
     override func sizeChanged() {
-        positionPresentedNode()
-    }
-    
-    override func backingView() -> PlatformView {
-        if let existing = reference as? ReferenceScrollView {
-            return existing
-        }
+        super.sizeChanged()
         
-        let created = ReferenceScrollView()
-        created.delegate = self
-        created.tied = self
-        reference = created
-        return created
+        positionPresentedNode()
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
