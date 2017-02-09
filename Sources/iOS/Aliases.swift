@@ -21,3 +21,5 @@ public typealias EdgeInsets = UIEdgeInsets
 public func EdgeInsetsMake(_ top: CGFloat, _ left: CGFloat, _ bottom: CGFloat, _ right: CGFloat) -> EdgeInsets {
     return EdgeInsets(top: top, left: left, bottom: bottom, right: right)
 }
+
+internal let InFlippedEnv = false

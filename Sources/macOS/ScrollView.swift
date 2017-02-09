@@ -22,7 +22,20 @@ public class ScrollView: View {
     override var backingView: PlatformView {
         return scrollView
     }
-    internal var contained: ScrollViewContained?
+    internal var contained: ScrollViewContained? {
+        didSet {
+            oldValue?.backingView.removeFromSuperview()
+            oldValue?.removeFromParent()
+            
+            guard let contained = contained else {
+                return
+            }
+            
+            contained.backingView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.documentView = contained.backingView
+        }
+    }
+    
     internal var contentOffsetY: CGFloat {
         return scrollView.contentView.visibleRect.origin.y
     }
@@ -31,6 +44,7 @@ public class ScrollView: View {
         view.drawsBackground = false
         view.hasVerticalScroller = true
         view.automaticallyAdjustsContentInsets = false
+        //view.documentView = self.dummy
         
         NotificationCenter.default.addObserver(self, selector: .scrolled, name: NSNotification.Name.NSScrollViewDidLiveScroll, object: nil)
         
@@ -39,7 +53,6 @@ public class ScrollView: View {
     fileprivate lazy var dummy: NSView = {
         var dummy = Flipper(frame: .zero)
         dummy.wantsLayer = true
-        self.scrollView.documentView = dummy
         return dummy
     }()
     internal var contentSize: CGSize = .zero {
@@ -48,6 +61,7 @@ public class ScrollView: View {
         }
     }
     public var contentInset: EdgeInsets = NSEdgeInsetsZero
+    public var verticallyCentered = false
     
     @objc fileprivate func didScroll(notification: NSNotification) {
         guard let object = notification.object as? NSScrollView, scrollView === object else {
