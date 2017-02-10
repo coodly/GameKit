@@ -24,7 +24,7 @@ public extension ScrollView {
         contentSize = contained.size
         addChild(contained)
         
-        contained.load()
+        contained.inflate()
         positionPresentedNode()
     }
 
