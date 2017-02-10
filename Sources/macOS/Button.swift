@@ -29,6 +29,15 @@ open class Button: View {
     }
     
     public var action: SKAction?
+    public var tintColor: SKColor?
+    
+    internal var icon: SKSpriteNode?
+    
+    override func sizeChanged() {
+        super.sizeChanged()
+        
+        positionIcon()
+    }
 }
 
 private class EmptyButton: NSButton {

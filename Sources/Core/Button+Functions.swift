@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import SpriteKit
+
 internal extension Selector {
     static let buttonTapped = #selector(Button.tapped)
 }
@@ -26,4 +28,21 @@ internal extension Button {
         
         run(action)
     }   
+}
+
+public extension Button {
+    public func set(icon named: String) {
+        icon = SKSpriteNode(imageNamed: named)
+        addChild(icon!)
+    }
+    
+    internal func positionIcon() {
+        if let tint = tintColor {
+            icon?.color = tint
+            icon?.colorBlendFactor = 1
+        }
+
+        icon?.size = size
+        icon?.position = CGPoint(x: size.width / 2, y: size.height / 2)
+    }
 }
