@@ -15,26 +15,11 @@
  */
 
 open class ScrollViewContained: View {
-    private lazy var flippedBack: Flipper = {
-        let flipped = Flipper()
-        flipped.wantsLayer = true
-        return flipped
-    }()
-    override var backingView: PlatformView {
-        return flippedBack
-    }
-    
     internal weak var scrollView: ScrollView?
     
     open override var size: CGSize {
         didSet {
             scrollView?.contentSize = size
         }
-    }
-}
-
-private class Flipper: NSView {
-    override var isFlipped: Bool {
-        return true
     }
 }

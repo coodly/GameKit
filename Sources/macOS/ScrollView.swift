@@ -19,6 +19,7 @@ private extension Selector {
 }
 
 public class ScrollView: View {
+    private var widthConstraint: NSLayoutConstraint?
     override var backingView: PlatformView {
         return scrollView
     }
@@ -31,8 +32,18 @@ public class ScrollView: View {
                 return
             }
             
+            let sub = contained.backingView
+            flipped.addSubview(sub)
+            
             contained.backingView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.documentView = contained.backingView
+            let top = NSLayoutConstraint(item: sub, attribute: .top, relatedBy: .equal, toItem: flipped, attribute: .top, multiplier: 1, constant: 0)
+            let centered = NSLayoutConstraint(item: sub, attribute: .centerX, relatedBy: .equal, toItem: flipped, attribute: .centerX, multiplier: 1, constant: 0)
+            let width = NSLayoutConstraint(item: sub, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 100)
+            let bottom = NSLayoutConstraint(item: sub, attribute: .bottom, relatedBy: .equal, toItem: flipped, attribute: .bottom, multiplier: 1, constant: 0)
+            flipped.addConstraints([top, centered, bottom, width])
+            
+            width.constant = sub.frame.width
+            widthConstraint = width
         }
     }
     
@@ -44,21 +55,29 @@ public class ScrollView: View {
         view.drawsBackground = false
         view.hasVerticalScroller = true
         view.automaticallyAdjustsContentInsets = false
+        view.documentView = self.flipped
+        
         NotificationCenter.default.addObserver(self, selector: .scrolled, name: NSNotification.Name.NSScrollViewDidLiveScroll, object: nil)
         
         return view
     }()
     internal var contentSize: CGSize = .zero {
         didSet {
-            guard let containedBacking = contained?.backingView else {
-                return
-            }
-            containedBacking.frame.origin.x = max(0, (scrollView.frame.width - containedBacking.frame.width) / 2)
-            contained?.backingView.frame.size = contentSize
+            widthConstraint?.constant = contentSize.width
+            flipped.frame.size.height = contentSize.height
         }
     }
-    public var contentInset: EdgeInsets = NSEdgeInsetsZero
+    public var contentInset: EdgeInsets = NSEdgeInsetsZero {
+        didSet {
+            scrollView.contentInsets = contentInset
+        }
+    }
     public var verticallyCentered = false
+    private lazy var flipped: Flipper = {
+        var dummy = Flipper(frame: .zero)
+        dummy.wantsLayer = true
+        return dummy
+    }()
     
     @objc fileprivate func didScroll(notification: NSNotification) {
         guard let object = notification.object as? NSScrollView, scrollView === object else {
@@ -71,6 +90,23 @@ public class ScrollView: View {
     override func sizeChanged() {
         super.sizeChanged()
         
+        if let contained = contained {
+            widthConstraint?.constant = contained.size.width
+            flipped.frame.size.height = contained.size.height
+        }
+        flipped.frame.size.width = size.width
+        
+        if verticallyCentered {
+            let spacing = max(0, (backingView.frame.size.height - contentSize.height) / 2)
+            scrollView.contentInsets = EdgeInsetsMake(spacing, 0, spacing, 0)
+        }
+
         positionPresentedNode()
+    }
+}
+
+private class Flipper: NSView {
+    override var isFlipped: Bool {
+        return true
     }
 }

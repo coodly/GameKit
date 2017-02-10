@@ -25,8 +25,7 @@ internal class MenuOptionsContainer: ScrollViewContained {
     internal var itemSize: CGSize = .zero {
         didSet {
             stackView.frame.size.width = itemSize.width
-            stackView.widthAnchor.constraint(equalToConstant: itemSize.width).isActive = true
-            stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
+            size.width = itemSize.width
         }
     }
     
@@ -46,8 +45,14 @@ internal class MenuOptionsContainer: ScrollViewContained {
         backing.translatesAutoresizingMaskIntoConstraints = false
         backing.heightAnchor.constraint(equalToConstant: itemSize.height).isActive = true
         stackView.addArrangedSubview(backing)
+        
+        let left = NSLayoutConstraint(item: backing, attribute: .left, relatedBy: .equal, toItem: stackView, attribute: .left, multiplier: 1, constant: 0)
+        let right = NSLayoutConstraint(item: backing, attribute: .right, relatedBy: .equal, toItem: stackView, attribute: .right, multiplier: 1, constant: 0)
+        stackView.addConstraints([left, right])
+        
         addChild(view)
         
         stackView.frame.size = stackView.fittingSize
+        size.height = stackView.frame.height
     }
 }
