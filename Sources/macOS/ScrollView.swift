@@ -44,20 +44,17 @@ public class ScrollView: View {
         view.drawsBackground = false
         view.hasVerticalScroller = true
         view.automaticallyAdjustsContentInsets = false
-        //view.documentView = self.dummy
-        
         NotificationCenter.default.addObserver(self, selector: .scrolled, name: NSNotification.Name.NSScrollViewDidLiveScroll, object: nil)
         
         return view
     }()
-    fileprivate lazy var dummy: NSView = {
-        var dummy = Flipper(frame: .zero)
-        dummy.wantsLayer = true
-        return dummy
-    }()
     internal var contentSize: CGSize = .zero {
         didSet {
-            dummy.frame = CGRect(x: 0, y: 0, width: self.size.width, height: contentSize.height)
+            guard let containedBacking = contained?.backingView else {
+                return
+            }
+            containedBacking.frame.origin.x = max(0, (scrollView.frame.width - containedBacking.frame.width) / 2)
+            contained?.backingView.frame.size = contentSize
         }
     }
     public var contentInset: EdgeInsets = NSEdgeInsetsZero
@@ -75,11 +72,5 @@ public class ScrollView: View {
         super.sizeChanged()
         
         positionPresentedNode()
-    }
-}
-
-private class Flipper: NSView {
-    override var isFlipped: Bool {
-        return true
     }
 }
