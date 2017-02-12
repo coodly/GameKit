@@ -25,7 +25,7 @@ open class ScrollViewContained: View {
         }
     }
     
-    open override func set(_ color: SKColor, for attribute: Appearance.Attribute) {
+    open override func set(color: SKColor, for attribute: Appearance.Attribute) {
         // no op
     }
 }

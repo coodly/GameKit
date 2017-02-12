@@ -111,7 +111,7 @@ public class StatusBar: View {
         updateBattery()
     }
     
-    public override func set(_ color: SKColor, for attribute: Appearance.Attribute) {
+    public override func set(color: SKColor, for attribute: Appearance.Attribute) {
         switch attribute {
         case Appearance.Attribute.foreground:
             tintColor = color
