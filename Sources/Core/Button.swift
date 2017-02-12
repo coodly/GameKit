@@ -16,8 +16,51 @@
 
 import SpriteKit
 
+public extension Appearance.Attribute {
+    static let title = UUID().uuidString
+}
+
 internal extension Selector {
     static let buttonTapped = #selector(Button.tapped)
+}
+
+open class Button: View {
+    private lazy var button: PlatformView = {
+        return self.createPlatformButton()
+    }()
+    
+    override var backingView: PlatformView {
+        return button
+    }
+    
+    public var action: SKAction?
+    public var tintColor: SKColor? {
+        didSet {
+            guard let tint = tintColor else {
+                return
+            }
+            icon?.color = tint
+        }
+    }
+    
+    internal var icon: SKSpriteNode?
+    
+    override func sizeChanged() {
+        super.sizeChanged()
+        
+        positionIcon()
+    }
+    
+    open override func set(_ color: SKColor, for attribute: Appearance.Attribute) {
+        super.set(color, for: attribute)
+        
+        switch attribute {
+        case Appearance.Attribute.foreground:
+            tintColor = color
+        default:
+            break //no op
+        }
+    }
 }
 
 internal extension Button {
@@ -27,7 +70,7 @@ internal extension Button {
         }
         
         run(action)
-    }   
+    }
 }
 
 public extension Button {
@@ -41,7 +84,7 @@ public extension Button {
             icon?.color = tint
             icon?.colorBlendFactor = 1
         }
-
+        
         icon?.size = size
         icon?.position = CGPoint(x: size.width / 2, y: size.height / 2)
     }

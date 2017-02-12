@@ -16,25 +16,17 @@
 
 import SpriteKit
 
-open class Button: View {
-    private lazy var button: UIButton = {
-        let button = UIButton(type: .custom)
-        button.addTarget(self, action: .buttonTapped, for: .touchUpInside)
-        return button
-    }()
-    
-    override var backingView: PlatformView {
+internal extension Button {
+    func createPlatformButton() -> PlatformView {
+        let button = EmptyButton()
+        button.target = self
+        button.action = .buttonTapped
         return button
     }
-    
-    public var action: SKAction?
-    public var tintColor: SKColor?
-    
-    internal var icon: SKSpriteNode?
-    
-    override func sizeChanged() {
-        super.sizeChanged()
+}
+
+private class EmptyButton: NSButton {
+    override func draw(_ dirtyRect: NSRect) {
         
-        positionIcon()
     }
 }
