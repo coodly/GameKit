@@ -43,10 +43,10 @@ open class Game: SKScene {
 
         view.inflate()
         view.applyTheme()
-        triggerUpdate()
+        //triggerUpdate()
     }
     
-    open override func didMove(to view: SKView) {
+    /*open override func didMove(to view: SKView) {
         super.didMove(to: view)
         
         triggerUpdate()
@@ -54,7 +54,7 @@ open class Game: SKScene {
     
     open override func didChangeSize(_ oldSize: CGSize) {
         triggerUpdate()
-    }
+    }*/
     
     private func triggerUpdate() {
         // let autolayout finish
