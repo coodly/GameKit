@@ -67,6 +67,10 @@ open class View: SKSpriteNode, Themed {
         
     }
     
+    open func update(_ time: TimeInterval) {
+        
+    }
+    
     internal func sizeChanged() {
         guard let parent = backingView.superview else {
             return
