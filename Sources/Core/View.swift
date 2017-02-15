@@ -44,7 +44,7 @@ open class View: SKSpriteNode, Themed {
         guard delayedAppear else {
             return
         }
-        let after = children.filter({ !before.contains($0) }).filter({ $0 is View }).filter({ !$0.isHidden })
+        let after = children.filter({ !before.contains($0) }).filter({ !$0.isHidden })
         for hide in after {
             hide.isHidden = true
         }
