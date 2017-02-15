@@ -66,4 +66,8 @@ public extension ScrollView {
     private func translatePointToContent(_ point: CGPoint) -> CGPoint {
         return contained!.convert(point, from: parent!)
     }
+    
+    public func contentSizeChanged() {
+        positionPresentedNode()
+    }
 }
