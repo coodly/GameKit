@@ -30,4 +30,8 @@ open class ScrollViewContained: View {
     open override func set(color: SKColor, for attribute: Appearance.Attribute) {
         // no op
     }
+    
+    open func scrolledVisible(to visibleFrame: CGRect) {
+        
+    }
 }
