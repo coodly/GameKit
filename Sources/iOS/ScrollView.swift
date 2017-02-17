@@ -76,6 +76,8 @@ public class ScrollView: View, UIScrollViewDelegate {
         guard let contained = contained else {
             return
         }
+
+        adjustInsets()
         
         contained.presentationWidth = size.width
 
@@ -87,5 +89,20 @@ public class ScrollView: View, UIScrollViewDelegate {
             contained.scrolledVisible(to: inNodeSpace)
         }
         run(notify)
+    }
+    
+    private func adjustInsets() {
+        guard verticallyCentered else {
+            return
+        }
+        
+        let spacing = (scrollView.bounds.height - contentHeightConstraint!.constant) / 2
+        guard scrollView.contentInset.top != spacing else {
+            return
+        }
+
+        scrollView.contentInset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
     }
 }
