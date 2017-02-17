@@ -96,7 +96,7 @@ public class ScrollView: View, UIScrollViewDelegate {
             return
         }
         
-        let spacing = (scrollView.bounds.height - contentHeightConstraint!.constant) / 2
+        let spacing = max(0, (scrollView.bounds.height - contentHeightConstraint!.constant) / 2)
         guard scrollView.contentInset.top != spacing else {
             return
         }
