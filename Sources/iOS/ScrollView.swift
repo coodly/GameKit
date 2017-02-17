@@ -37,6 +37,8 @@ public class ScrollView: View, UIScrollViewDelegate {
     private var contentWidthConstraint: LayoutConstraint?
     private var contentHeightConstraint: LayoutConstraint?
     
+    private var inflated = false
+    
     private var contained: ScrollViewContained? {
         didSet {
             oldValue?.backingView.removeFromSuperview()
@@ -46,6 +48,7 @@ public class ScrollView: View, UIScrollViewDelegate {
                 return
             }
             
+            contained.color = .red
             addSubview(contained)
             
             let xCentered = LayoutConstraint(item: contained, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
@@ -66,10 +69,18 @@ public class ScrollView: View, UIScrollViewDelegate {
         scrollView.setContentOffset(offset, animated: animated)
     }
     
-    public func contentSizeChanged(to size: CGSize) {
-        scrollView.contentSize = size                
+    public func contentSizeChanged(to size: CGSize, presentationHeight: CGFloat = 0) {
+        let presentedContentSize = CGSize(width: size.width, height: presentationHeight > 0 ? presentationHeight : size.height)
+        scrollView.contentSize = presentedContentSize
         contentWidthConstraint?.constant = size.width
         contentHeightConstraint?.constant = size.height
+        
+        guard !CGSize.zero.equalTo(self.size) else {
+            return
+        }
+        
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
     }
     
     public override func positionChildren() {
@@ -77,7 +88,9 @@ public class ScrollView: View, UIScrollViewDelegate {
             return
         }
 
-        adjustInsets()
+        if verticallyCentered {
+            adjustVerticalInsets()
+        }
         
         contained.presentationWidth = size.width
 
@@ -91,11 +104,7 @@ public class ScrollView: View, UIScrollViewDelegate {
         run(notify)
     }
     
-    private func adjustInsets() {
-        guard verticallyCentered else {
-            return
-        }
-        
+    private func adjustVerticalInsets() {
         let spacing = max(0, (scrollView.bounds.height - contentHeightConstraint!.constant) / 2)
         guard scrollView.contentInset.top != spacing else {
             return
