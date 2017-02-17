@@ -48,7 +48,6 @@ public class ScrollView: View, UIScrollViewDelegate {
                 return
             }
             
-            contained.color = .red
             addSubview(contained)
             
             let xCentered = LayoutConstraint(item: contained, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
