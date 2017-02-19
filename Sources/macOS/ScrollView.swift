@@ -60,6 +60,7 @@ public class ScrollView: View {
             contained.color = .red
             contained.anchorPoint = .zero
             addChild(contained)
+            contained.inflate()
             let backing = contained.backingView
             backing.translatesAutoresizingMaskIntoConstraints = false
             flipped.addSubview(backing)
@@ -100,7 +101,9 @@ public class ScrollView: View {
     }
     
     public func setContentOffset(_ offset: CGPoint, animated: Bool) {
-
+        scrollView.contentView.scroll(to: NSPoint(x: offset.x, y: offset.y))
+        scrollView.reflectScrolledClipView(scrollView.contentView)
+        positionContained()
     }
     
     public override func positionChildren() {
