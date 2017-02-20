@@ -16,12 +16,12 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'iOS' do |os|
-    os.dependency "GameKit/Core"
+    os.dependency "SpriteKitUI/Core"
     os.source_files = "Sources/iOS"
   end
 
   s.subspec 'macOS' do |os|
-    os.dependency "GameKit/Core"
+    os.dependency "SpriteKitUI/Core"
     os.source_files = "Sources/macOS"
   end
 
