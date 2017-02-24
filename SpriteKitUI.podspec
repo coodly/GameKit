@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'SpriteKitUI'
-  s.version = '0.1.0'
+  s.version = '0.3.0'
   s.license = 'Apache 2'
   s.summary = 'Game kit on top of SpiteKit'
   s.homepage = 'https://github.com/coodly/SpriteKitUI'
